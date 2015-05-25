@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Eksempler på Local Storage</title>
+    <meta charset="utf-8">
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+
+<body>
+
+    <!-- This is our HTML code -->
+    <h1>Hvad vil du afhente i stationsbutikken?</h1>
+    <form id="stationsForm" onsubmit="addItem()">
+        <label>Du vil afhente:</label>
+        <input type="text" id="vareInput" />
+        <button type="submit">Tilføj</button>
+        <button type="button" onclick="resetData()">Ryd local storage</button>
+    </form>
+    <h1>Varer i din kurv</h1>
+    <div id="vareKurv"></div>
+
+    <!-- This is our JavaScript code, containing 3 functions -->
+    <script>
+        showItems(); // Vi viser alle varer fra Local Storage
+
+        // Denne er vores første funktion
+        // Denne funktion bruges, hvis der klikkes på "Tilføj" knappen
+        function addItem() {
+            var vare = $('#vareInput').val(); // Værdien fra vareInput felt
+            // For en god ordens skyld, vi tester om "Storage" er understøttet i denne browser
+            if (typeof (Storage) != "undefined") {
+                // Hvis der allerede er varer i kurven, vi indlæser dem i en variable
+                var vareriKurven = localStorage.getItem("varer");
+                // Vi deklarer en variable, uden værdi indtil videre
+                var varer;
+                // Hvis der ikke er varer i kurven, så læg første vare i
+                if (vareriKurven == null) {
+                    varer = vare + ", ";
+                    // Er der varer i forvejen? Så læg varen til...
+                } else {
+                    varer = vareriKurven + vare + ", ";
+                }
+                // Gemmer varer i Local Storage, kun hvis "vare" variablen ikke er "tøm"
+                if (vare != "") {
+                    localStorage.setItem("varer", varer);
+                }
+                // Vi opdaterer varerkurven
+                showItems();
+            } else {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+            }
+
+        }
+
+        // Denne er vores anden funktion
+        // Bruges til at nulstille Local Storage
+        function resetData() {
+            localStorage.clear();
+            console.log("Storage cleared");
+            showItems();
+        }
+
+        // Denne er vores tredje funktion
+        // Bruges til at indlæse varekurven fra Local Storage og vise det i HTML'en
+        function showItems() {
+            if (typeof (Storage) != "undefined") {
+                // Hent "varer" fra Local Storage, og vis dem inde i "vareKurv" div tag
+                document.getElementById("vareKurv").innerHTML = localStorage.getItem("varer");
+            } else {
+                document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+            }
+        }
+    </script>
+</body>
+
+</html>
