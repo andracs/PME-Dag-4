@@ -1,0 +1,16 @@
+CACHE MANIFEST
+# 2015-05-26 v1.0.0
+# See explanation on http://www.w3schools.com/html/html5_app_cache.asp
+/pme_dag4/local_storage.html
+/pme_dag4/session_storage.html
+/pme_dag4/index.html
+/pme_dag4/offline.html
+/pme_dag4/offline.svg
+http://code.jquery.com/jquery-1.11.3.min.js
+
+NETWORK:
+# No items here
+/pme_dag4/registration.html
+
+FALLBACK:
+/pme_dag4/registration.html /pme_dag4/offline.html
